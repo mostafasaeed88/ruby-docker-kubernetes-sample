@@ -1,0 +1,71 @@
+# Default values for ruby-chart.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+chartName: ruby-chart
+environment:
+    name: development
+api:
+    deployment:
+        name: dep-ruby
+        tier: web
+        replicas: 1
+        image: codehut/ruby-docker-kubernetes-sample
+        imageVersion: latest
+        liveness:
+            enabled: false
+            path: /liveness
+            port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 20
+            timeoutSeconds: 20
+        readiness:
+            enabled: false
+            path: /readiness
+            port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 20
+            timeoutSeconds: 20
+        resources:
+            memoryRequest: 1Gi
+            cpuRequest: 0.25
+            memoryLimit: 1Gi
+            cpuLimit: 0.25
+    secret:
+        name: secret-ruby
+        type: Opaque
+    service:
+        name: svc-ruby
+        port: 80
+        targetPort: 8000
+        nodePort: 30001
+        type: NodePort
+    configMap:
+        name: cmap-ruby
+
+
+##
+## PostgreSQL chart configuration
+##
+postgresql:
+  ## PostgreSQL password
+  ## ref: https://hub.docker.com/_/postgres/
+  ##
+  postgresUser: drkiq
+  postgresDatabase: drkiq
+  postgresPassword: "123456"
+
+  ## Enable persistence using Persistent Volume Claims
+  ## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
+  ##
+  persistence:
+    enabled: true
+    ## postgresql data Persistent Volume Storage Class
+    ## If defined, storageClassName: <storageClass>
+    ## If set to "-", storageClassName: "", which disables dynamic provisioning
+    ## If undefined (the default) or set to null, no storageClassName spec is
+    ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+    ##   GKE, AWS & OpenStack)
+    ##
+    # storageClass: "-"
+    accessMode: ReadWriteOnce
+    size: 8Gi

@@ -1,0 +1,74 @@
+apiVersion: apps/v1beta1 # for versions before 1.6.0 use extensions/v1beta1
+kind: Deployment
+metadata:
+  namespace: {{ .Values.environment.namespace }}
+  name: {{ .Values.api.deployment.name }}
+spec:
+  replicas: {{ .Values.api.deployment.replicas }}
+  template:
+    metadata:
+      labels:
+        app: ruby
+    spec:
+      containers:
+      - name: ruby
+        image: "{{ .Values.api.deployment.image }}:{{ .Values.api.deployment.imageVersion }}"
+        imagePullPolicy: IfNotPresent
+        {{if .Values.api.deployment.liveness.enabled }}
+        livenessProbe:
+            httpGet:
+                path: "{{ .Values.api.deployment.liveness.path }}"
+                port: {{ .Values.api.deployment.liveness.port }}
+            initialDelaySeconds: {{ .Values.api.deployment.liveness.initialDelaySeconds }}
+            periodSeconds: {{ .Values.api.deployment.liveness.periodSeconds }}
+            timeoutSeconds: {{ .Values.api.deployment.liveness.timeoutSeconds }}
+        {{end}}
+        {{if .Values.api.deployment.readiness.enabled }}
+        readinessProbe:
+            httpGet:
+                path: "{{ .Values.api.deployment.readiness.path }}"
+                port: {{ .Values.api.deployment.readiness.port }}
+            initialDelaySeconds: {{ .Values.api.deployment.readiness.initialDelaySeconds }}
+            periodSeconds: {{ .Values.api.deployment.readiness.periodSeconds }}
+            timeoutSeconds: {{ .Values.api.deployment.readiness.timeoutSeconds }}
+        {{end}}
+        resources:
+            requests:
+                memory: "{{ .Values.api.deployment.resources.memoryRequest }}"
+                cpu: "{{ .Values.api.deployment.resources.cpuRequest }}"
+            limits:
+                memory: "{{ .Values.api.deployment.resources.memoryLimit }}"
+                cpu: "{{ .Values.api.deployment.resources.cpuLimit }}"
+        ports:
+        - containerPort: 80
+        env:
+        - name: SECRET_TOKEN
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Values.api.configMap.name }}
+              key: app.secretToken
+        - name: WORKER_PROCESSES
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Values.api.configMap.name }}
+              key: app.workerProcesses
+        - name: DATABASE_URL
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Values.api.configMap.name }}
+              key: db.url
+        - name: CACHE_URL
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Values.api.configMap.name }}
+              key: app.cacheUrl
+        - name: JOB_WORKER_URL
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Values.api.configMap.name }}
+              key: app.jobWorkerUrl
+        - name: LISTEN_ON
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Values.api.configMap.name }}
+              key: app.listenOn

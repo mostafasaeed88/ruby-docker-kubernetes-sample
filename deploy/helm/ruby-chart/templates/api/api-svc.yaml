@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.api.service.name }}
+  labels:
+    app: ruby
+spec:
+  ports:
+  - port: {{ .Values.api.service.port }}
+    targetPort: {{ .Values.api.service.targetPort }}
+    {{if .Values.api.service.nodePort}}
+    nodePort: {{.Values.api.service.nodePort}}
+    {{end}}
+    protocol: TCP
+    name: http
+  selector:
+    app: filkhedma-backend
+  type: {{ .Values.api.service.type }}
+  {{if .Values.api.service.loadBalancerIP}}
+  loadBalancerIP: {{.Values.api.service.loadBalancerIP}}
+  {{end}}
+
