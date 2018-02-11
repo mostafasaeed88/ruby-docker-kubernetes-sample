@@ -6,6 +6,6 @@ data:
   app.secretToken: "asecuretokenwouldnormallygohere"
   app.workerProcesses: "1"
   app.cacheUrl: "redis://redis:6379/0"
-  app.jobWorkerUrl: "redis://redis:6379/0"
+  app.jobWorkerUrl: "redis://ruby-redis:6379/0"
   app.listenOn: "0.0.0.0:8000"
   db.url: "postgresql://drkiq:123456@ruby-postgresql:5432/drkiq?encoding=utf8&pool=5&timeout=5000"
