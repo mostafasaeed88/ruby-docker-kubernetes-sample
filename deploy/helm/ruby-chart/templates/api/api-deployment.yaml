@@ -5,6 +5,8 @@ metadata:
   name: {{ .Values.api.deployment.name }}
 spec:
   replicas: {{ .Values.api.deployment.replicas }}
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:

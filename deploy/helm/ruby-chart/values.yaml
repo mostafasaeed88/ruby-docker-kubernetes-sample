@@ -10,7 +10,7 @@ api:
         tier: web
         replicas: 1
         image: codehut/ruby-docker-kubernetes-sample
-        imageVersion: 0.0.1
+        imageVersion: 0.0.2
         liveness:
             enabled: false
             path: /liveness
