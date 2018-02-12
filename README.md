@@ -1,4 +1,4 @@
-# Welcome to Ruby , Docker , Docker Compose & Kubernetes Sample
+﻿# Welcome to Ruby , Docker , Docker Compose & Kubernetes Sample
 
 This repository will show you how to use a deploy a containerized sample ruby project using Docker Compose ,Kubernetes & Helm.
 
