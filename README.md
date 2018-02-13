@@ -3,7 +3,7 @@
 This repository will show you how to use a deploy a containerized sample ruby project using Docker Compose ,Kubernetes & Helm.
 
 # Prerequisites
-You should have the following installed to your local machine :
+You should have the following installed to your local machine :  
 1 - [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) : a command line tool used to execute commands and talk to kubernetes.  
 2 - [Minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/)  will be used to test kubernetes deployments on your local machine.  
 3 - [Helm](https://github.com/kubernetes/helm/blob/master/docs/install.md) will be used to deploy to Kubernetes  
@@ -138,6 +138,8 @@ And we're done ! this how the page should look like :
 ## Using Helm Values
 
 You may need to change the chart configuration ,for instance , a production environment configuration will use the same chart but with different number of replicas,you can use the same helm chart to deploy multiple releases with different values for different environments by passing a different **values.yaml** while installing or upgrading a chart. for the sake of this demo , we will change the configuration of the currently existing chart by changing **svc-ruby** service nodePort to 30002 instead of 30001.just open **deploy/helm/ruby-chart/values.yaml** file and change apply this change
+
+> Note: for the sake of this demo , helm values file has been added to the code repository ,otherwise for production usage, values file should reside in Jenkins or fetched by Jenkins during the pipeline.
 
 ```
     service:
