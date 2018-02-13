@@ -30,9 +30,6 @@ api:
             cpuRequest: 0.25
             memoryLimit: 1Gi
             cpuLimit: 0.25
-    secret:
-        name: secret-ruby
-        type: Opaque
     service:
         name: svc-ruby
         port: 80
