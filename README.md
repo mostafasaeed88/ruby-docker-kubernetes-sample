@@ -1,6 +1,6 @@
 ﻿# Welcome to Ruby & Kubernetes Sample
 
-This repository will show you how to use a deploy a containerized sample ruby project using Docker Compose ,Kubernetes & Helm.
+This repository will show you how to use a deploy a containerized sample ruby project using Docker Compose ,Kubernetes & Helm.This repository is configured for automated build to publish the docker image to DockerHub at [https://hub.docker.com/r/codehut/ruby-docker-kubernetes-sample/](https://hub.docker.com/r/codehut/ruby-docker-kubernetes-sample/)
 
 # Prerequisites
 You should have the following installed to your local machine :  
